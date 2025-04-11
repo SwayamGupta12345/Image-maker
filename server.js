@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 // Route for generator page
-app.get("/generate-page", (req, res) => {
+app.get("/generate_page", (req, res) => {
   if (!req.session.history) req.session.history = []; // ✅ Ensure it's initialized
   res.render("index", {
     images: [],
@@ -48,7 +48,7 @@ app.get("/generate-page", (req, res) => {
 
 app.post("/generate", async (req, res) => {
   const prompt = req.body.prompt;
-  if (!prompt) return res.redirect("/generate-page");
+  if (!prompt) return res.redirect("/generate_page");
 
   try {
     const images = [];
