@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const HF_API_KEY = process.env.HF_API_KEY;
+const HF_API_KEY=process.env.HF_API_KEY;  
 const IMG_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0";
 
 const session = require('express-session');
@@ -86,7 +86,7 @@ app.post("/generate", async (req, res) => {
       history: req.session.history
     });
   } catch (error) {
-    console.error("❌ Error:", error.response?.data || error.message);
+    console.error("❌ Error:", error.response?.data.toString() || error.message.toString());
     const errorMessage = error.response?.data?.error || "Image API error.";
 
     // Preserve history and prompt even on error
@@ -99,8 +99,6 @@ app.post("/generate", async (req, res) => {
     });
   }
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
