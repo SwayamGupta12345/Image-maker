@@ -9,6 +9,14 @@ const PORT = process.env.PORT || 3000;
 const HF_API_KEY = process.env.HF_API_KEY;
 const IMG_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0";
 
+const session = require('express-session');
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
 if (!HF_API_KEY) {
   console.error("❌ Error: Missing Hugging Face API Key. Set HF_API_KEY in your .env file.");
   process.exit(1);
@@ -27,22 +35,30 @@ app.get("/", (req, res) => {
 
 // Route for generator page
 app.get("/generate-page", (req, res) => {
-  res.render("index", { images: [], video: null, error: null, prompt: "" });
+  if (!req.session.history) req.session.history = []; // ✅ Ensure it's initialized
+  res.render("index", {
+    images: [],
+    video: null,
+    error: null,
+    prompt: "",
+    history: req.session.history, // ✅ Pass history here
+  });
 });
 
-// IMAGE GENERATION
+
 app.post("/generate", async (req, res) => {
   const prompt = req.body.prompt;
   if (!prompt) return res.redirect("/generate-page");
 
   try {
     const images = [];
+
     for (let i = 0; i < 2; i++) {
       await new Promise(resolve => setTimeout(resolve, 2000)); // Delay to avoid rate limits
 
       const response = await axios.post(
         IMG_API_URL,
-        { inputs: `${prompt}, variation ${i + 1}` },
+        { inputs: `${prompt}`, variation: `${i + 1}` },
         {
           headers: { Authorization: `Bearer ${HF_API_KEY}` },
           responseType: "arraybuffer"
@@ -53,13 +69,38 @@ app.post("/generate", async (req, res) => {
       images.push(base64Image);
     }
 
-    res.render("index", { images, video: null, error: null, prompt });
+    // 🧠 Store prompt & images in session for history
+    if (!req.session.history) {
+      req.session.history = [];
+    }
+
+    req.session.history.unshift({ prompt, images });
+    req.session.history = req.session.history.slice(0, 10); // keep only last 5
+
+    // 🖼️ Render with current and previous data
+    res.render("index", {
+      images,
+      video: null,
+      error: null,
+      prompt,
+      history: req.session.history
+    });
   } catch (error) {
     console.error("❌ Error:", error.response?.data || error.message);
     const errorMessage = error.response?.data?.error || "Image API error.";
-    res.render("index", { images: [], video: null, error: errorMessage, prompt });
+
+    // Preserve history and prompt even on error
+    res.render("index", {
+      images: [],
+      video: null,
+      error: errorMessage,
+      prompt,
+      history: req.session.history || []
+    });
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
