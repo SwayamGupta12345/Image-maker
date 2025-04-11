@@ -4,8 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veridia: The Spectrum of Imagination.
-  </title>
+  <title>Veridia: The Spectrum of Imagination</title>
+  <meta name="description" content="AI Image Generator - Unleash Your Imagination" />
+  <meta name="description" content="AI Image Generator - Unleash Your Imagination" />
+  <link rel="icon" href="/veridia.ico" type="image/x-icon" />
+
 
   <!-- Tailwind CSS & FontAwesome (for footer icons) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -138,12 +141,20 @@
   </div>
 
 <!-- Navbar -->
-<nav class="w-full glass bg-gradient-to-r from-purple-200 via-pink-100 to-yellow-100 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 px-4 py-3 shadow-md flex justify-end items-center relative z-10">
-    <button onclick="document.documentElement.classList.toggle('dark')"
-      class="text-sm bg-white/40 text-black dark:text-white px-3 py-1 rounded-md hover:bg-white/60 transition">
-      🌓 Toggle Mode
-    </button>
-  </nav>
+<nav class="w-full glass bg-gradient-to-r from-purple-200 via-pink-100 to-yellow-100 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 px-4 py-3 shadow-md flex justify-between items-center relative z-10">
+  <!-- Logo -->
+  <div class="flex items-center space-x-2">
+    <img src="veridia.jpg" alt="Veridia Logo" class="h-8 w-8 rounded-full object-cover" />
+    <span class="text-lg font-semibold text-gray-800 dark:text-white">Veridia</span>
+  </div>
+
+  <!-- Toggle Button -->
+  <button onclick="document.documentElement.classList.toggle('dark')"
+    class="text-sm bg-white/40 text-black dark:text-white px-3 py-1 rounded-md hover:bg-white/60 transition">
+    🌓 Toggle Mode
+  </button>
+</nav>
+
   
 <h1 class="text-6xl sm:text-7xl font-black text-center mt-10 mb-8 
   bg-gradient-to-r from-rose-500 via-pink-500 to-amber-300 
