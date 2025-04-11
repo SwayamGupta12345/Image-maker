@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Art Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#9333EA',
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 30%;
+            filter: blur(50px);
+            animation: drift 8s ease-in-out infinite alternate, pulse 4s ease-in-out infinite alternate;
+        }
+        .blob-1 {
+            background-color: #a855f7; /* Purple */
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            left: 10%;
+        }
+        .blob-2 {
+            background-color: #f97316; /* Orange */
+            width: 300px;
+            height: 300px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+            filter: blur(60px);
+        }
+        .blob-3 {
+            background-color: #84cc16; /* Green */
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 40%;
+            animation-delay: 2s;
+            filter: blur(40px);
+        }
+        .blob-4 {
+            background-color: #eab308; /* Yellow */
+            width: 250px;
+            height: 250px;
+            top: 15%;
+            right: 30%;
+            animation-delay: 0.5s;
+            filter: blur(70px);
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 30px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-300 via-pink-200 to-yellow-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-white font-sans flex flex-col items-center justify-center relative overflow-hidden">
+
+    <div class="absolute inset-0 overflow-hidden z-0">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="z-10 text-center px-6">
+        <h1 class="text-6xl sm:text-7xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-md mb-6">
+            🌊 Liquid AI Magic 🎨
+        </h1>
+        <p class="text-lg sm:text-xl font-medium text-gray-700 dark:text-gray-200 mb-10">
+            Dive into the flow of imagination. Create fluid art with AI.
+        </p>
+
+        <a href="/generate-page"
+            class="inline-block bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-xl hover:scale-110 transition-all duration-300">
+            🚀 Launch Image Generator
+        </a>
+    </div>
+
+</body>
+</html>
